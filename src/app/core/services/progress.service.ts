@@ -1,10 +1,12 @@
 import { Injectable, signal } from '@angular/core';
 import { type QuizResult, type TopicProgress } from '../models/progress.model';
+
 @Injectable({ providedIn: 'root' })
 export class ProgressService {
   private readonly key = 'geoexploradores-progress-v1';
   private readonly state = signal<Record<string, TopicProgress>>(this.load());
   readonly progress = this.state.asReadonly();
+
   get(topicId: string): TopicProgress {
     return (
       this.state()[topicId] ?? {
@@ -17,13 +19,15 @@ export class ProgressService {
       }
     );
   }
-  completeLesson(topicId: string, lessonId: string) {
+
+  completeLesson(topicId: string, lessonId: string): void {
     const p = this.get(topicId);
     if (!p.completedLessons.includes(lessonId)) {
       this.save({ ...p, completedLessons: [...p.completedLessons, lessonId] });
     }
   }
-  saveQuiz(result: QuizResult) {
+
+  saveQuiz(result: QuizResult): void {
     const p = this.get(result.topicId);
     const pct = result.total ? Math.round((result.score / result.total) * 100) : 0;
     const stars = pct >= 90 ? 3 : pct >= 70 ? 2 : pct >= 50 ? 1 : 0;
@@ -34,8 +38,14 @@ export class ProgressService {
       totalPoints: p.totalPoints + result.points,
       stars: Math.max(p.stars, stars),
     });
-    sessionStorage.setItem('geoexploradores-last-result', JSON.stringify(result));
+    this.rememberLastResult(result);
   }
+
+  savePractice(result: QuizResult): void {
+    // La práctica no cambia la mejor nota del repaso final.
+    this.rememberLastResult(result);
+  }
+
   lastResult(): QuizResult | null {
     try {
       return JSON.parse(
@@ -45,11 +55,17 @@ export class ProgressService {
       return null;
     }
   }
-  private save(p: TopicProgress) {
+
+  private rememberLastResult(result: QuizResult): void {
+    sessionStorage.setItem('geoexploradores-last-result', JSON.stringify(result));
+  }
+
+  private save(p: TopicProgress): void {
     const next = { ...this.state(), [p.topicId]: p };
     this.state.set(next);
     localStorage.setItem(this.key, JSON.stringify(next));
   }
+
   private load(): Record<string, TopicProgress> {
     try {
       return JSON.parse(localStorage.getItem(this.key) ?? '{}') as Record<string, TopicProgress>;

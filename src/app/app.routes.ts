@@ -1,4 +1,5 @@
 import { type Routes } from '@angular/router';
+
 export const routes: Routes = [
   { path: '', loadComponent: () => import('./features/home/home').then(m => m.Home) },
   {
@@ -8,6 +9,10 @@ export const routes: Routes = [
   {
     path: 'tema/:topicId/aprender/:lessonId',
     loadComponent: () => import('./features/lesson/lesson').then(m => m.LessonPage),
+  },
+  {
+    path: 'tema/:topicId/practicar/:lessonId',
+    loadComponent: () => import('./features/quiz/quiz').then(m => m.QuizPage),
   },
   {
     path: 'tema/:topicId/practicar',

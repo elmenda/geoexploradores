@@ -3,7 +3,7 @@ export const ACTIVIDAD_LESSON: Lesson = {
  id:'actividad-tierra', title:'La actividad de la Tierra', subtitle:'Huracanes, inundaciones, sequías, incendios, terremotos y volcanes.', description:'Descubre cómo se manifiesta la energía de nuestro planeta.',
  sections:[
   {id:'atmosfera-hidrosfera', title:'Actividad en atmósfera e hidrosfera', emoji:'🌧️', accent:'blue', blocks:[
-   {type:'text', text:'La atmósfera y la hidrosfera tienen una actividad intensa. Algunos fenómenos pueden provocar catástrofes y afectar a las personas y al paisaje.'},
+   {type:'text', text:'La Tierra contiene mucha energía y, a veces, su actividad provoca catástrofes. La atmósfera y la hidrosfera tienen una actividad intensa; algunos fenómenos pueden afectar a las personas y al paisaje.'},
    {type:'cards', title:'Fenómenos que debemos conocer', items:[
     {title:'Huracanes', emoji:'🌀', description:'Son tormentas con lluvias intensas y vientos muy violentos.'},
     {title:'Inundaciones', emoji:'🌊', description:'Son desbordamientos del caudal de un río o torrente por lluvias extremas.'},

@@ -30,7 +30,7 @@ export const SISTEMA_SOLAR_LESSON: Lesson = {
     },
     {
       id: 'tierra-luna', title: 'La Tierra y la Luna', emoji: '🌍', accent: 'green', blocks: [
-        { type: 'text', text: 'La Tierra tiene forma de esfera algo achatada por los polos. La Luna es su único satélite natural: es esférica, mucho más pequeña que nuestro planeta y no tiene luz propia. La vemos brillante porque la ilumina el Sol.' },
+        { type: 'text', text: 'La Tierra tiene forma de esfera algo achatada por los polos. La Luna es su único satélite natural: es esférica, mucho más pequeña que nuestro planeta y no tiene luz propia. La vemos brillante porque la ilumina el Sol. No tiene atmósfera como la Tierra, y en el libro se explica que por ello no hay vida en ella.' },
         { type: 'cards', title: 'Los movimientos de la Luna', items: [
           { title: 'Rotación', emoji: '🔄', description: 'La Luna gira sobre sí misma y tarda unos 28 días en completar una vuelta.' },
           { title: 'Traslación', emoji: '🌍', description: 'Al mismo tiempo, gira alrededor de la Tierra y tarda también unos 28 días.' },
@@ -43,9 +43,9 @@ export const SISTEMA_SOLAR_LESSON: Lesson = {
         { type: 'text', text: 'Mientras la Luna se mueve alrededor de la Tierra, el Sol no ilumina del mismo modo la parte que vemos. Por eso observamos distintas fases lunares.' },
         { type: 'cards', title: 'Las cuatro fases principales', items: [
           { title: 'Luna nueva', emoji: '🌑', description: 'La Luna está entre la Tierra y el Sol y casi no se observa.' },
-          { title: 'Cuarto creciente', emoji: '🌓', description: 'Se observa iluminada aproximadamente su mitad derecha.' },
+          { title: 'Cuarto creciente', emoji: '🌓', description: 'Se observa iluminada aproximadamente su mitad derecha. Suele verse durante la tarde y la noche.' },
           { title: 'Luna llena', emoji: '🌕', description: 'La Tierra se encuentra entre la Luna y el Sol y vemos la cara lunar iluminada.' },
-          { title: 'Cuarto menguante', emoji: '🌗', description: 'Se observa iluminada aproximadamente su mitad izquierda.' },
+          { title: 'Cuarto menguante', emoji: '🌗', description: 'Se observa iluminada aproximadamente su mitad izquierda. Suele distinguirse de madrugada.' },
         ]},
       ]
     },
