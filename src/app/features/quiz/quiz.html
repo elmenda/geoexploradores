@@ -3,46 +3,61 @@
     <a [routerLink]="['/tema', topicId()]" class="back">✕ Salir</a>
     <div class="score">⭐ {{ points() }} puntos</div>
   </header>
+  <div class="exercise-context">
+    <span class="exercise-label">{{ isReview() ? '🏆 COMPRUEBA TU PROGRESO' : '🎯 PRACTICA ESTA LECCIÓN' }}</span>
+    <h1>{{ isReview() ? 'Repaso final: La Tierra' : lesson()?.title }}</h1>
+    <p>
+      {{ isReview()
+        ? 'Preguntas nuevas de todo el tema. No verás las soluciones hasta terminar.'
+        : 'Pon a prueba lo aprendido. Revisaremos cada respuesta antes de seguir.' }}
+    </p>
+  </div>
   @if (question(); as q) {
     <div class="quiz-progress">
-      <span>Pregunta {{ index() + 1 }} de {{ questions().length }}</span
-      ><app-progress-bar [value]="pct()" />
+      <span>Pregunta {{ index() + 1 }} de {{ questions().length }}</span>
+      <app-progress-bar [value]="pct()" />
     </div>
     <section class="question-card">
-      <span class="difficulty">{{
-        q.difficulty === 'easy'
-          ? '🌱 Fácil'
-          : q.difficulty === 'medium'
-            ? '🌿 Intermedia'
-            : '🌳 Reto'
-      }}</span>
-      <h1>{{ q.question }}</h1>
+      @if (!isReview()) {
+        <span class="difficulty">{{
+          q.difficulty === 'easy' ? '🌱 Fácil' : q.difficulty === 'medium' ? '🌿 Intermedia' : '🌳 Reto'
+        }}</span>
+      }
+      <h2>{{ q.question }}</h2>
       <div class="answers">
         @for (answer of q.answers; track answer.id) {
           <button
+            type="button"
             class="answer"
-            [class.correct]="selected() === answer.id && answer.correct"
+            [class.correct]="!isReview() && selected() === answer.id && answer.correct"
+            [class.incorrect]="!isReview() && selected() === answer.id && !answer.correct"
+            [class.chosen]="isReview() && selected() === answer.id"
             (click)="choose(answer)"
             [disabled]="!!selected()"
           >
-            <span class="answer-emoji">{{ answer.emoji ?? '🔹' }}</span
-            ><span>{{ answer.text }}</span>
+            <span>{{ answer.text }}</span>
           </button>
         }
       </div>
-      @if (wrongTry() && !selected()) {
-        <div class="feedback hint">
-          <strong>🤔 ¡Casi! Inténtalo otra vez.</strong><span>💡 {{ q.hint }}</span>
-        </div>
-      }
       @if (selected()) {
-        <div class="feedback success">
-          <strong>🎉 ¡Muy bien! +{{ q.points }} puntos</strong><span>{{ q.explanation }}</span
-          ><button (click)="continue()">
-            {{ index() === questions().length - 1 ? 'Ver resultado 🏆' : 'Continuar →' }}
+        <div class="feedback" [class.success]="!isReview() && wasCorrect()" [class.hint]="!isReview() && !wasCorrect()" [class.neutral]="isReview()">
+          @if (isReview()) {
+            <strong>Respuesta registrada</strong>
+            <span>La corrección se mostrará al terminar el repaso.</span>
+          } @else {
+            <strong>{{ wasCorrect() ? '¡Muy bien!' : 'Vamos a repasarlo' }}</strong>
+            <span>{{ q.explanation }}</span>
+            @if (!wasCorrect()) {
+              <span><b>Respuesta correcta:</b> {{ correctAnswer(q) }}</span>
+            }
+          }
+          <button type="button" (click)="continue()">
+            {{ index() === questions().length - 1 ? 'Ver resultado 🏆' : 'Siguiente →' }}
           </button>
         </div>
       }
     </section>
+  } @else {
+    <p>Preparando las preguntas...</p>
   }
 </main>

@@ -7,13 +7,11 @@
         <span>{{ index() + 1 }} / {{ l.sections.length }}</span>
       </div>
     </header>
-
     @if (section(); as s) {
       <article class="study-card" [attr.data-accent]="s.accent">
         <span class="mini">{{ l.title }}</span>
         <div class="visual" aria-hidden="true">{{ s.emoji }}</div>
         <h1>{{ s.title }}</h1>
-
         <div class="lesson-blocks">
           @for (block of s.blocks; track $index) {
             @switch (block.type) {
@@ -22,27 +20,19 @@
               }
               @case ('important') {
                 <div class="remember">
-                  @if (block.title) {
-                    <span>{{ block.title }}</span>
-                  }
+                  @if (block.title) { <span>{{ block.title }}</span> }
                   <strong>{{ block.text }}</strong>
                 </div>
               }
               @case ('cards') {
                 <section class="content-section">
-                  @if (block.title) {
-                    <h2>{{ block.title }}</h2>
-                  }
+                  @if (block.title) { <h2>{{ block.title }}</h2> }
                   <div class="concept-cards">
                     @for (item of block.items ?? []; track item.title) {
                       <div class="concept-card">
-                        @if (item.emoji) {
-                          <span class="concept-emoji" aria-hidden="true">{{ item.emoji }}</span>
-                        }
+                        @if (item.emoji) { <span class="concept-emoji" aria-hidden="true">{{ item.emoji }}</span> }
                         <h3>{{ item.title }}</h3>
-                        @if (item.description) {
-                          <p>{{ item.description }}</p>
-                        }
+                        @if (item.description) { <p>{{ item.description }}</p> }
                       </div>
                     }
                   </div>
@@ -50,20 +40,14 @@
               }
               @case ('list') {
                 <section class="content-section list-section">
-                  @if (block.title) {
-                    <h2>{{ block.title }}</h2>
-                  }
+                  @if (block.title) { <h2>{{ block.title }}</h2> }
                   <ul>
                     @for (item of block.items ?? []; track item.title) {
                       <li>
-                        @if (item.emoji) {
-                          <span aria-hidden="true">{{ item.emoji }}</span>
-                        }
+                        @if (item.emoji) { <span aria-hidden="true">{{ item.emoji }}</span> }
                         <span>
                           <strong>{{ item.title }}</strong>
-                          @if (item.description) {
-                            <small>{{ item.description }}</small>
-                          }
+                          @if (item.description) { <small>{{ item.description }}</small> }
                         </span>
                       </li>
                     }
@@ -74,13 +58,19 @@
           }
         </div>
       </article>
-
       <nav aria-label="Navegación de la lección">
         <button type="button" (click)="previous()" [disabled]="index() === 0">← Anterior</button>
         <button type="button" class="primary" (click)="next()">
-          {{ index() === l.sections.length - 1 ? '¡Lo tengo! ✓' : 'Siguiente →' }}
+          {{ index() === l.sections.length - 1 ? 'He terminado de estudiar ✓' : 'Siguiente →' }}
         </button>
       </nav>
+      @if (index() === l.sections.length - 1) {
+        <div class="practice-prompt">
+          <h2>🎯 Ahora practica: {{ l.title }}</h2>
+          <p>Responde preguntas sobre esta lección antes de pasar a la siguiente.</p>
+          <a [routerLink]="['/tema', topicId(), 'practicar', lessonId()]">Comenzar práctica →</a>
+        </div>
+      }
     }
   </main>
 }

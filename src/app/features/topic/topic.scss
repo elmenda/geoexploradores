@@ -17,8 +17,7 @@
 .title > span {
   font-size: 4.5rem;
 }
-.title small,
-.status {
+.title small, .status {
   font-weight: 800;
   color: var(--color-primary-600);
   font-size: 0.78rem;
@@ -66,7 +65,9 @@
   font-size: 1.3rem;
   display: grid;
   place-items: center;
+  flex: 0 0 48px;
 }
+.lesson-body { min-width: 0; }
 .lesson-body h3 {
   font-size: 1.35rem;
   margin: 8px 0;
@@ -74,6 +75,11 @@
 .lesson-body p {
   color: var(--color-text-secondary);
   min-height: 42px;
+}
+.lesson-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
 }
 .button {
   display: inline-block;
@@ -110,13 +116,7 @@
   color: #665e4c;
 }
 @media (max-width: 650px) {
-  .challenge {
-    grid-template-columns: 1fr;
-  }
-  .title {
-    align-items: flex-start;
-  }
-  .title > span {
-    font-size: 3rem;
-  }
+  .challenge { grid-template-columns: 1fr; }
+  .title { align-items: flex-start; }
+  .title > span { font-size: 3rem; }
 }
